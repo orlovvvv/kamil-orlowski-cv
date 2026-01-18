@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Kamil Orlowski - CV</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'uber-black': '#000000',
+                        'uber-white': '#FFFFFF',
+                        'uber-gray-600': '#545454',
+                        'uber-gray-200': '#D4D4D4',
+                        'uber-blue': '#276EF1',
+                    },
+                    fontFamily: {
+                        'display': ['Questrial', 'sans-serif'],
+                        'body': ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+
+<body class="bg-uber-white text-uber-black font-body antialiased min-h-screen flex items-center justify-center">
+    <main class="text-center px-8">
+        <h1 class="font-display text-5xl md:text-6xl font-normal tracking-tight text-uber-black mb-4">
+            Kamil Orlowski
+        </h1>
+        <p class="text-lg uppercase tracking-[0.15em] text-uber-gray-600 mb-16">
+            Full Stack Developer
+        </p>
+
+        <p class="text-sm uppercase tracking-[0.2em] text-uber-gray-600 mb-8">
+            Select Language
+        </p>
+
+        <div class="flex justify-center gap-12">
+            <a
+                href="cv-pl.html"
+                class="group"
+            >
+                <span class="font-display text-6xl md:text-7xl font-normal text-uber-black group-hover:text-uber-blue transition-colors">
+                    PL
+                </span>
+                <span class="block text-xs uppercase tracking-[0.2em] text-uber-gray-600 mt-2 group-hover:text-uber-blue transition-colors">
+                    Polski
+                </span>
+            </a>
+            <a
+                href="cv-en.html"
+                class="group"
+            >
+                <span class="font-display text-6xl md:text-7xl font-normal text-uber-black group-hover:text-uber-blue transition-colors">
+                    EN
+                </span>
+                <span class="block text-xs uppercase tracking-[0.2em] text-uber-gray-600 mt-2 group-hover:text-uber-blue transition-colors">
+                    English
+                </span>
+            </a>
+        </div>
+    </main>
+</body>
+
+</html>

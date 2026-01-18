@@ -1,0 +1,14 @@
+{
+  "name": "kamil-orlowski-cv",
+  "version": "1.0.0",
+  "description": "UBER-styled CV with PDF generation",
+  "type": "module",
+  "scripts": {
+    "generate-pdf": "node scripts/generate-pdf.js",
+    "generate-pdf:pl": "node scripts/generate-pdf.js pl",
+    "generate-pdf:en": "node scripts/generate-pdf.js en"
+  },
+  "devDependencies": {
+    "puppeteer": "^23.0.0"
+  }
+}
