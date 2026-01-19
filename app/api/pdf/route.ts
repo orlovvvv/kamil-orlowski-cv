@@ -5,7 +5,10 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const lang = searchParams.get("lang") === "pl" ? "pl" : "en";
 
-  const baseUrl = request.nextUrl.origin;
+  const baseUrl =
+    process.env.NODE_ENV === "production"
+      ? request.nextUrl.origin
+      : `http://localhost:${process.env.PORT || 3000}`;
   const cvUrl = `${baseUrl}/cv?lang=${lang}`;
 
   let browser;
