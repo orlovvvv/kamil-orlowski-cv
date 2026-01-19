@@ -6,9 +6,8 @@ export async function GET(request: NextRequest) {
   const lang = searchParams.get("lang") === "pl" ? "pl" : "en";
 
   const baseUrl =
-    process.env.NODE_ENV === "production"
-      ? request.nextUrl.origin
-      : `http://localhost:${process.env.PORT || 3000}`;
+    process.env.PDF_BASE_URL ||
+    `http://localhost:${process.env.PORT || 3000}`;
   const cvUrl = `${baseUrl}/cv?lang=${lang}`;
 
   let browser;
