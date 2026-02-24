@@ -4,11 +4,12 @@ import puppeteer from "puppeteer";
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const lang = searchParams.get("lang") === "pl" ? "pl" : "en";
+  const variant = searchParams.get("variant") === "admin" ? "admin" : "programming";
 
   const baseUrl =
     process.env.PDF_BASE_URL ||
     `http://localhost:${process.env.PORT || 3000}`;
-  const cvUrl = `${baseUrl}/cv?lang=${lang}`;
+  const cvUrl = `${baseUrl}/cv?lang=${lang}&variant=${variant}`;
 
   let browser;
   try {
@@ -40,7 +41,7 @@ export async function GET(request: NextRequest) {
     return new NextResponse(Buffer.from(pdf), {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="cv-kamil-orlowski-${lang}.pdf"`,
+        "Content-Disposition": `attachment; filename="cv-kamil-orlowski-${lang}-${variant}.pdf"`,
       },
     });
   } catch (error) {

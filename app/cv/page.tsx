@@ -1,13 +1,14 @@
-import { cvData, type Language } from "@/lib/cv-data";
+import { cvData, type Language, type CVVariant } from "@/lib/cv-data";
 
 interface CVPageProps {
-  searchParams: Promise<{ lang?: string }>;
+  searchParams: Promise<{ lang?: string; variant?: string }>;
 }
 
 export default async function CVPage({ searchParams }: CVPageProps) {
   const params = await searchParams;
   const lang = (params.lang === "pl" ? "pl" : "en") as Language;
-  const data = cvData[lang];
+  const variant = (params.variant === "admin" ? "admin" : "programming") as CVVariant;
+  const data = cvData[lang][variant];
 
   return (
     <html lang={lang}>
@@ -59,9 +60,10 @@ export default async function CVPage({ searchParams }: CVPageProps) {
               .avatar { width: 14mm; height: 14mm; border-radius: 50%; object-fit: cover; }
               h1 { font-size: 28px; font-weight: 400; letter-spacing: -0.025em; color: #171717; }
               .title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; color: #737373; margin-top: 1mm; }
-              .contact { font-size: 10px; color: #737373; }
-              .contact a { color: #737373; text-decoration: none; }
-              .contact span { margin: 0 2mm; }
+              .contact { font-size: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 3mm 4mm; }
+              .contact-item { display: inline-flex; align-items: center; gap: 1.5mm; color: #737373; text-decoration: none; }
+              .contact-item.highlight { color: #171717; }
+              .contact-item svg { width: 3.5mm; height: 3.5mm; flex-shrink: 0; }
               section { margin-bottom: 5mm; }
               h2 { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #171717; margin-bottom: 2.5mm; }
               p.about { font-size: 12px; line-height: 1.5; color: #737373; }
@@ -108,21 +110,52 @@ export default async function CVPage({ searchParams }: CVPageProps) {
               </div>
             </div>
             <div className="contact">
-              <a href={`mailto:${data.contact.email}`}>{data.contact.email}</a>
-              <span>|</span>
-              <a href={`tel:${data.contact.phone.replace(/\s/g, "")}`}>
+              <a href={`mailto:${data.contact.email}`} className="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
+                  <path d="M3 7l9 6l9 -6" />
+                </svg>
+                {data.contact.email}
+              </a>
+              <a href={`tel:${data.contact.phone.replace(/\s/g, "")}`} className="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+                </svg>
                 {data.contact.phone}
               </a>
-              <span>|</span>
+              <a
+                href={`https://${data.contact.website}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-item highlight"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                  <path d="M3.6 9h16.8" />
+                  <path d="M3.6 15h16.8" />
+                  <path d="M11.5 3a17 17 0 0 0 0 18" />
+                  <path d="M12.5 3a17 17 0 0 1 0 18" />
+                </svg>
+                {data.contact.website}
+              </a>
               <a
                 href={`https://${data.contact.github}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="contact-item highlight"
               >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+                </svg>
                 {data.contact.github}
               </a>
-              <span>|</span>
-              <span>{data.contact.location}</span>
+              <span className="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                  <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
+                </svg>
+                {data.contact.location}
+              </span>
             </div>
           </header>
 

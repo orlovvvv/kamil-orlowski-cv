@@ -1,8 +1,54 @@
 import Image from "next/image";
+import {
+  IconMail,
+  IconPhone,
+  IconWorld,
+  IconBrandGithub,
+  IconMapPin,
+} from "@tabler/icons-react";
 import { type CVData } from "@/lib/cv-data";
 
 interface CVHeaderProps {
   data: CVData;
+}
+
+function ContactItem({
+  href,
+  icon: Icon,
+  children,
+  highlight,
+  external,
+}: {
+  href?: string;
+  icon: typeof IconMail;
+  children: React.ReactNode;
+  highlight?: boolean;
+  external?: boolean;
+}) {
+  const baseStyles = "inline-flex items-center gap-1.5 transition-colors";
+  const colorStyles = highlight
+    ? "text-foreground hover:text-foreground/70"
+    : "text-muted-foreground hover:text-foreground";
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        className={`${baseStyles} ${colorStyles}`}
+        {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+      >
+        <Icon size={14} strokeWidth={1.5} />
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <span className={`${baseStyles} text-muted-foreground`}>
+      <Icon size={14} strokeWidth={1.5} />
+      {children}
+    </span>
+  );
 }
 
 export function CVHeader({ data }: CVHeaderProps) {
@@ -25,31 +71,33 @@ export function CVHeader({ data }: CVHeaderProps) {
           </p>
         </div>
       </div>
-      <div className="text-xs text-muted-foreground">
-        <a
-          href={`mailto:${data.contact.email}`}
-          className="hover:text-primary transition-colors"
-        >
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs">
+        <ContactItem href={`mailto:${data.contact.email}`} icon={IconMail}>
           {data.contact.email}
-        </a>
-        <span className="mx-2">|</span>
-        <a
+        </ContactItem>
+        <ContactItem
           href={`tel:${data.contact.phone.replace(/\s/g, "")}`}
-          className="hover:text-primary transition-colors"
+          icon={IconPhone}
         >
           {data.contact.phone}
-        </a>
-        <span className="mx-2">|</span>
-        <a
+        </ContactItem>
+        <ContactItem
+          href={`https://${data.contact.website}`}
+          icon={IconWorld}
+          highlight
+          external
+        >
+          {data.contact.website}
+        </ContactItem>
+        <ContactItem
           href={`https://${data.contact.github}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-primary transition-colors"
+          icon={IconBrandGithub}
+          highlight
+          external
         >
           {data.contact.github}
-        </a>
-        <span className="mx-2">|</span>
-        <span>{data.contact.location}</span>
+        </ContactItem>
+        <ContactItem icon={IconMapPin}>{data.contact.location}</ContactItem>
       </div>
     </header>
   );
